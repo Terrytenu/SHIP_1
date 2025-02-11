@@ -236,6 +236,11 @@
                 window.WEBCAM_SETTINGS.video['deviceId'] = deviceId;
                 //console.log(window.WEBCAM_SETTINGS);
                 iTracker.WEBCAM_NAME = select.options[select.selectedIndex].innerHTML;
+                if (window.unityInstance) {
+                    window.unityInstance.SendMessage("WebGLEasyReaderSample", "ReceiveSelectedCameraId", deviceId);
+                } else {
+                    console.log("Unity instance not initialized");
+                }
             }
 
             async function FlipCam(){
