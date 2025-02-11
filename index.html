@@ -187,6 +187,13 @@
                 }  
             }
             async function LoadWebcams(){
+
+                try {
+                    await navigator.mediaDevices.getUserMedia({ video: true });
+                } catch (err) {
+                    console.error("Webcam permission denied:", err);
+                    return;
+                }
                 let camDevices = [];
                 // let backCams = [];
                 let devices = await navigator.mediaDevices.enumerateDevices();
