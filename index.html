@@ -187,14 +187,18 @@
                 }  
             }
             async function LoadWebcams(){
-
-                try {
-                    await navigator.mediaDevices.getUserMedia({ video: true });
-                } catch (err) {
-                    console.error("Webcam permission denied:", err);
-                    return;
-                }
                 let camDevices = [];
+
+                if (!window.webcamPermissionGranted) {
+                    try {
+                        console.log("Requesting webcam permissions...");
+                        await navigator.mediaDevices.getUserMedia({ video: true });
+                        window.webcamPermissionGranted = true; // 퍼미션 요청 상태 저장
+                    } catch (err) {
+                        console.error("Webcam permission denied:", err);
+                        return;
+                    }
+                }
                 // let backCams = [];
                 let devices = await navigator.mediaDevices.enumerateDevices();
                 var ctr = 0;
